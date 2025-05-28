@@ -7,7 +7,7 @@ import tempfile
 import requests
 
 # 🔗 Model URL (Raw .h5 file on GitHub)
-MODEL_URL = "https://github.com/joo1232/gold_price_predection/blob/main/final_gold_model.h5"
+MODEL_URL = "https://github.com/joo1232/gold_price_predection/raw/refs/heads/main/final_gold_model.h5"
 
 # 🛠 Page settings
 st.set_page_config(page_title="Gold Price Predictor", layout="centered")
