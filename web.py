@@ -4,18 +4,31 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import MinMaxScaler
 import tempfile
+import requests
 
 # Page settings
 st.set_page_config(page_title="Gold Price Predictor", layout="centered")
 st.title("🟡 Gold Price Predictor")
 st.markdown("Upload your gold price CSV to predict closing prices for any date, even beyond your data.")
 
-# Upload inputs
-csv_file = st.file_uploader("📄 Upload CSV (must contain Date, Close)", type=["csv"])
-model_file = "final_gold_model.h5"
+# GitHub URL of your model file (raw file link)
+MODEL_URL = "https://github.com/yourusername/yourrepo/raw/main/final_gold_model.h5"
 
-if csv_file and model_file:
+# Upload CSV file
+csv_file = st.file_uploader("📄 Upload CSV (must contain Date, Close)", type=["csv"])
+
+if csv_file:
     try:
+        # Download model from GitHub
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".h5") as tmp:
+            model_path = tmp.name
+            response = requests.get(MODEL_URL)
+            response.raise_for_status()  # Raise error if request failed
+            tmp.write(response.content)
+
+        # Load model from downloaded file
+        model = load_model(model_path)
+
         # Load and preprocess CSV
         df = pd.read_csv(csv_file)
         df['Date'] = pd.to_datetime(df['Date'])
@@ -34,12 +47,6 @@ if csv_file and model_file:
                 max_value=max_date
             )
             selected_datetime = pd.to_datetime(selected_date)
-
-            # Load model from temp file
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".h5") as tmp:
-                tmp.write(model_file.read())
-                tmp_path = tmp.name
-            model = load_model(tmp_path)
 
             # Scale close prices
             scaler = MinMaxScaler()
