@@ -12,7 +12,7 @@ st.title("🟡 Gold Price Predictor")
 st.markdown("Upload your gold price CSV to predict closing prices for any date, even beyond your data.")
 
 # GitHub URL of your model file (raw file link)
-MODEL_URL = "https://github.com/yourusername/yourrepo/raw/main/final_gold_model.h5"
+MODEL_URL = "https://github.com/joo1232/gold_price_predection/blob/main/final_gold_model.h5"
 
 # Upload CSV file
 csv_file = st.file_uploader("📄 Upload CSV (must contain Date, Close)", type=["csv"])
