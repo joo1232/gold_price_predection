@@ -8,11 +8,11 @@ import tempfile
 # Page settings
 st.set_page_config(page_title="Gold Price Predictor", layout="centered")
 st.title("🟡 Gold Price Predictor")
-st.markdown("Upload your gold price CSV and trained model to predict closing prices for any date, even beyond your data.")
+st.markdown("Upload your gold price CSV to predict closing prices for any date, even beyond your data.")
 
 # Upload inputs
 csv_file = st.file_uploader("📄 Upload CSV (must contain Date, Close)", type=["csv"])
-model_file = st.file_uploader("📦 Upload trained model (.h5)", type=["h5"])
+model_file = "final_gold_model.h5"
 
 if csv_file and model_file:
     try:
